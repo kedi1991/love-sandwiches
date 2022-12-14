@@ -17,12 +17,16 @@ sales = SHEET.worksheet("sales")
 # print(data)
 
 def get_Sales_data():
-    """get daat from the terminal
+    """get data from the terminal
     """
-    print("Enter in the format (x,y,z,a,b,c)")
-    data = input("Please enter the sales: ")
-    split_data = data.split(",")
-    validate_data(split_data)
+    while True:
+        print("Enter in the format (x,y,z,a,b,c)")
+        data = input("\nPlease enter the sales: ")
+        split_data = data.split(",")
+        
+        if validate_data(split_data):
+            break
+    return split_data    
 
 def validate_data(data):
     """check the data is 6 elements and integers only"""
@@ -34,5 +38,10 @@ def validate_data(data):
                 print(f"We need 6 elements, you provided {len(data)}")
             )
     except ValueError as e:
-        print(f"You have entered invalid data: {e}")    
-get_Sales_data()
+        print(f"You have entered invalid data: {e}")
+        return False
+
+    return True  
+
+
+data = get_Sales_data()
