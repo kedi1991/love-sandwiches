@@ -16,6 +16,7 @@ sales = SHEET.worksheet("sales")
 # data = sales.get_all_values()
 # print(data)
 
+
 def get_Sales_data():
     """get data from the terminal
     """
@@ -27,6 +28,7 @@ def get_Sales_data():
         if validate_data(split_data):
             break
     return split_data    
+
 
 def validate_data(data):
     """check the data is 6 elements and integers only"""
@@ -43,6 +45,7 @@ def validate_data(data):
 
     return True  
 
+
 def update_sales_worksheet(data):
     """
     update the worksheet with a new row of data
@@ -52,6 +55,44 @@ def update_sales_worksheet(data):
     sales_worksheet.append_row(data)
     print("Success...")
 
-data = get_Sales_data()
-int_data = [int(num) for num in data]
-update_sales_worksheet(data)
+
+def calculate_stock_data():
+    """
+    calculate the stock data
+    Positive means surplus, negative means less
+    """
+    print("Calculating the stock ...")
+    stock_data = SHEET.worksheet("stock").get_all_values()
+    stock_row = stock_data[-1]
+
+    return stock_row
+
+
+def calculate_surplus_data():
+    """
+    Calculate the surplus data after sales for the day
+    """
+    sales_data = get_Sales_data()
+    stock_data = calculate_stock_data()
+
+    print(sales_data)
+    print(stock_data)
+    surplus_data = [int(sale) - int(stock) for sale, stock in zip(sales_data, stock_data)]
+    
+    return surplus_data
+
+
+def main():
+    """
+    Call all the methods in teh program
+    """
+    calculate_stock_data()
+    
+    data = get_Sales_data()
+    calculate_surplus_data()
+    int_data = [int(num) for num in data]
+    update_sales_worksheet(int_data)
+
+
+print("welcome to the love sandwiches automation program")
+main()
