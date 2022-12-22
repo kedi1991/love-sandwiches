@@ -76,12 +76,24 @@ def calculate_stock_data():
     return stock_row
 
 
+def get_last_5_entries():
+    """
+    Get last fibve entries of the columns
+    """
+    sales_sheet = SHEET.worksheet("sales")
+    last_five = sales_sheet.col_values(3)
+    print(last_five)
+
+
 def calculate_surplus_data():
     """
     Calculate the surplus data after sales for the day
     """
     sales_data = get_Sales_data()
     stock_data = calculate_stock_data()
+
+    #convert to int and subtract using the zip function to run 2 loops simultaneously
+    
 
     print(sales_data)
     print(stock_data)
@@ -99,9 +111,9 @@ def main():
     data = get_Sales_data()
     int_data = [int(num) for num in data]
     update_sales_worksheet(int_data)
-    update_surplus_worksheet(calculate_surplus_data()
-)
+    update_surplus_worksheet(calculate_surplus_data())
 
 
 print("welcome to the love sandwiches automation program")
-main()
+#main()
+get_last_5_entries()
